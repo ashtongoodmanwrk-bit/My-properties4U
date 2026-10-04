@@ -5,6 +5,7 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.audit import record
 from app.database import get_db
 from app.deps import require_role
 from app.models import Property, Unit, User
@@ -84,6 +85,20 @@ def create_payment(
     elif charge.status != "overdue":
         charge.status = "partial"
     try:
+        db.flush()  # assigns payment.id
+        record(
+            db,
+            user.id,
+            "payment",
+            payment.id,
+            "create",
+            new={
+                "rent_charge_id": charge.id,
+                "amount": data.amount,
+                "method": data.method,
+                "charge_status": charge.status,
+            },
+        )
         db.commit()
     except IntegrityError:
         # Backstop: the unique constraint caught a duplicate key we missed.
@@ -117,5 +132,6 @@ def list_payments(
         stmt.order_by(Payment.id.desc()).limit(limit).offset(offset)
     ).all()
     return Page(items=items, total=total, limit=limit, offset=offset)
+
 
 

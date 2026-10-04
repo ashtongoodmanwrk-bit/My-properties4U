@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from app.audit import record
 from app.database import get_db
 from app.deps import require_role
 from app.models import Property, Unit, User
@@ -64,6 +65,20 @@ def create_request(
         unit_id=lease.unit_id, reported_by=user.id, **data.model_dump()
     )
     db.add(req)
+    db.flush()  # assigns req.id
+    record(
+        db,
+        user.id,
+        "maintenance_request",
+        req.id,
+        "create",
+        new={
+            "unit_id": req.unit_id,
+            "title": req.title,
+            "category": req.category,
+            "priority": req.priority,
+        },
+    )
     db.commit()
     db.refresh(req)
     return req
@@ -130,9 +145,19 @@ def update_status(
             )
         req.assigned_to = data.assigned_to
 
+    record(
+        db,
+        user.id,
+        "maintenance_request",
+        req.id,
+        "status_change",
+        old={"status": req.status},
+        new={"status": data.status, "assigned_to": req.assigned_to},
+    )
     req.status = data.status
     if data.status == "resolved":
         req.resolved_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(req)
     return req
+

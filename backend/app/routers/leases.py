@@ -5,6 +5,7 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.audit import record
 from app.database import get_db
 from app.deps import require_role
 from app.models import Property, Unit, User
@@ -107,7 +108,22 @@ def create_lease(
     db.add_all(
         RentCharge(lease_id=lease.id, due_date=d, amount=rent) for d in due_dates
     )
-    db.commit()  # lease and its rent schedule are saved together or not at all
+    record(
+        db,
+        user.id,
+        "lease",
+        lease.id,
+        "create",
+        new={
+            "unit_id": lease.unit_id,
+            "tenant_id": lease.tenant_id,
+            "start_date": lease.start_date,
+            "end_date": lease.end_date,
+            "rent_amount": lease.rent_amount,
+            "charges_generated": len(due_dates),
+        },
+    )
+    db.commit()  # lease, rent schedule and audit entry are saved together or not at all
     db.refresh(lease)
     return lease
 
@@ -156,3 +172,4 @@ def list_charges(
         .offset(offset)
     ).all()
     return Page(items=items, total=total, limit=limit, offset=offset)
+
