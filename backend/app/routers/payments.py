@@ -79,7 +79,10 @@ def create_payment(
         idempotency_key=idempotency_key,
     )
     db.add(payment)
-    charge.status = "paid" if data.amount == remaining else "partial"
+    if data.amount == remaining:
+        charge.status = "paid"
+    elif charge.status != "overdue":
+        charge.status = "partial"
     try:
         db.commit()
     except IntegrityError:
@@ -114,3 +117,5 @@ def list_payments(
         stmt.order_by(Payment.id.desc()).limit(limit).offset(offset)
     ).all()
     return Page(items=items, total=total, limit=limit, offset=offset)
+
+
