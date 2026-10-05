@@ -20,9 +20,7 @@ router = APIRouter(prefix="/properties", tags=["properties"])
 
 def get_owned_property(property_id: int, db: Session, user: User) -> Property:
     prop = db.scalar(
-        select(Property).where(
-            Property.id == property_id, Property.owner_id == user.id
-        )
+        select(Property).where(Property.id == property_id, Property.owner_id == user.id)
     )
     if prop is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Property not found")
@@ -105,9 +103,7 @@ def create_unit(
     except IntegrityError:
         # The unique (property_id, unit_number) constraint enforces this.
         db.rollback()
-        raise HTTPException(
-            status.HTTP_409_CONFLICT, "Unit number already exists in this property"
-        )
+        raise HTTPException(status.HTTP_409_CONFLICT, "Unit number already exists in this property")
     db.refresh(unit)
     return unit
 
@@ -121,9 +117,7 @@ def list_units(
     user: User = Depends(require_role("landlord")),
 ):
     prop = get_owned_property(property_id, db, user)
-    total = db.scalar(
-        select(func.count()).select_from(Unit).where(Unit.property_id == prop.id)
-    )
+    total = db.scalar(select(func.count()).select_from(Unit).where(Unit.property_id == prop.id))
     items = db.scalars(
         select(Unit)
         .where(Unit.property_id == prop.id)

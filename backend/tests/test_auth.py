@@ -31,7 +31,5 @@ def test_me_requires_a_token(client):
 
 def test_wrong_password_is_rejected(client, make_user):
     make_user("a@example.com", "landlord")
-    r = client.post(
-        "/auth/login", data={"username": "a@example.com", "password": "WrongPass999"}
-    )
+    r = client.post("/auth/login", data={"username": "a@example.com", "password": "WrongPass999"})
     assert r.status_code == 401

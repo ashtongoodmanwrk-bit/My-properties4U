@@ -15,9 +15,9 @@ def pay(client, tenant, charge_id, amount, key):
 
 
 def charge_status(client, setup, charge_id):
-    items = client.get(
-        f"/leases/{setup['lease']['id']}/charges", headers=setup["tenant"]
-    ).json()["items"]
+    items = client.get(f"/leases/{setup['lease']['id']}/charges", headers=setup["tenant"]).json()[
+        "items"
+    ]
     return next(c["status"] for c in items if c["id"] == charge_id)
 
 

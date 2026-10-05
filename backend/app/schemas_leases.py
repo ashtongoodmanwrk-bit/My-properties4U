@@ -9,9 +9,7 @@ class LeaseCreate(BaseModel):
     tenant_email: EmailStr
     start_date: date
     end_date: date
-    rent_amount: Decimal | None = Field(
-        default=None, gt=0, max_digits=10, decimal_places=2
-    )
+    rent_amount: Decimal | None = Field(default=None, gt=0, max_digits=10, decimal_places=2)
     due_day: int = Field(default=1, ge=1, le=28)
 
     @model_validator(mode="after")

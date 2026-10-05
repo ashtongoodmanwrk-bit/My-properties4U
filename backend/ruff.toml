@@ -1,0 +1,12 @@
+line-length = 100
+target-version = "py312"
+extend-exclude = ["migrations"]
+
+[lint]
+select = ["E", "F", "I", "UP", "B"]
+# E501: the formatter handles line length. B008/B904: standard FastAPI patterns
+# (Depends() in defaults, raising HTTPException inside except blocks).
+ignore = ["E501", "B008", "B904"]
+
+[lint.per-file-ignores]
+"tests/conftest.py" = ["E402"]  # DATABASE_URL must be set before the app is imported

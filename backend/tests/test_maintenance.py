@@ -23,9 +23,7 @@ def move(client, setup, request_id, new_status, assigned_to=None):
     body = {"status": new_status}
     if assigned_to:
         body["assigned_to"] = assigned_to
-    return client.patch(
-        f"/maintenance/{request_id}", headers=setup["landlord"], json=body
-    )
+    return client.patch(f"/maintenance/{request_id}", headers=setup["landlord"], json=body)
 
 
 def test_tenant_reports_issue_on_their_own_unit(client, lease_setup):

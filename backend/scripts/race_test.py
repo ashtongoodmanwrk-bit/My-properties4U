@@ -9,9 +9,9 @@ BASE = "http://127.0.0.1:8000"
 
 def main():
     email, password, charge_a, charge_b, amount = sys.argv[1:6]
-    token = httpx.post(
-        f"{BASE}/auth/login", data={"username": email, "password": password}
-    ).json()["access_token"]
+    token = httpx.post(f"{BASE}/auth/login", data={"username": email, "password": password}).json()[
+        "access_token"
+    ]
     auth = {"Authorization": f"Bearer {token}"}
 
     def run(charge_id, keys):

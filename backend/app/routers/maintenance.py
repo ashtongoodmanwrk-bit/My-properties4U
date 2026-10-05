@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
@@ -61,9 +61,7 @@ def create_request(
             status.HTTP_403_FORBIDDEN, "You need an active lease to report an issue"
         )
 
-    req = MaintenanceRequest(
-        unit_id=lease.unit_id, reported_by=user.id, **data.model_dump()
-    )
+    req = MaintenanceRequest(unit_id=lease.unit_id, reported_by=user.id, **data.model_dump())
     db.add(req)
     db.flush()  # assigns req.id
     record(
@@ -86,8 +84,9 @@ def create_request(
 
 @router.get("", response_model=Page[MaintenanceOut])
 def list_requests(
-    status_filter: Literal["submitted", "assigned", "in_progress", "resolved"]
-    | None = Query(None, alias="status"),
+    status_filter: Literal["submitted", "assigned", "in_progress", "resolved"] | None = Query(
+        None, alias="status"
+    ),
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
@@ -156,8 +155,7 @@ def update_status(
     )
     req.status = data.status
     if data.status == "resolved":
-        req.resolved_at = datetime.now(timezone.utc)
+        req.resolved_at = datetime.now(UTC)
     db.commit()
     db.refresh(req)
     return req
-

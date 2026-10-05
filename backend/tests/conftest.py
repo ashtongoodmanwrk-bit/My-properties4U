@@ -1,9 +1,7 @@
 import os
 
 # Must be set before the app is imported, so every connection uses the test database.
-os.environ["DATABASE_URL"] = (
-    "postgresql+psycopg://app:app@localhost:5432/property_mgmt_test"
-)
+os.environ["DATABASE_URL"] = "postgresql+psycopg://app:app@localhost:5432/property_mgmt_test"
 
 import pytest
 from alembic import command

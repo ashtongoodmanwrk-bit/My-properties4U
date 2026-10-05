@@ -69,9 +69,7 @@ def create_lease(
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Unit not found")
 
     tenant = db.scalar(
-        select(User).where(
-            User.email == data.tenant_email.lower(), User.role == "tenant"
-        )
+        select(User).where(User.email == data.tenant_email.lower(), User.role == "tenant")
     )
     if tenant is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Tenant not found")
@@ -105,9 +103,7 @@ def create_lease(
         raise
 
     due_dates = generate_due_dates(data.start_date, data.end_date, data.due_day)
-    db.add_all(
-        RentCharge(lease_id=lease.id, due_date=d, amount=rent) for d in due_dates
-    )
+    db.add_all(RentCharge(lease_id=lease.id, due_date=d, amount=rent) for d in due_dates)
     record(
         db,
         user.id,
@@ -160,9 +156,7 @@ def list_charges(
 ):
     lease = get_visible_lease(lease_id, db, user)
     total = db.scalar(
-        select(func.count())
-        .select_from(RentCharge)
-        .where(RentCharge.lease_id == lease.id)
+        select(func.count()).select_from(RentCharge).where(RentCharge.lease_id == lease.id)
     )
     items = db.scalars(
         select(RentCharge)
@@ -172,4 +166,3 @@ def list_charges(
         .offset(offset)
     ).all()
     return Page(items=items, total=total, limit=limit, offset=offset)
-

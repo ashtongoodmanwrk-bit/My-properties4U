@@ -21,9 +21,7 @@ router = APIRouter(prefix="/payments", tags=["payments"])
 def create_payment(
     data: PaymentCreate,
     response: Response,
-    idempotency_key: str = Header(
-        ..., alias="Idempotency-Key", min_length=8, max_length=100
-    ),
+    idempotency_key: str = Header(..., alias="Idempotency-Key", min_length=8, max_length=100),
     db: Session = Depends(get_db),
     user: User = Depends(require_role("tenant")),
 ):
@@ -128,10 +126,5 @@ def list_payments(
         stmt = stmt.where(Payment.user_id == user.id)
 
     total = db.scalar(select(func.count()).select_from(stmt.subquery()))
-    items = db.scalars(
-        stmt.order_by(Payment.id.desc()).limit(limit).offset(offset)
-    ).all()
+    items = db.scalars(stmt.order_by(Payment.id.desc()).limit(limit).offset(offset)).all()
     return Page(items=items, total=total, limit=limit, offset=offset)
-
-
-

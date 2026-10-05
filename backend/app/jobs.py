@@ -1,5 +1,5 @@
 import logging
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta
 
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session
@@ -48,7 +48,7 @@ def send_reminders(db: Session, today: date | None = None, days_ahead: int = 3) 
         .with_for_update(of=RentCharge, skip_locked=True)
     ).all()
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     for charge, email in rows:
         logger.info(
             "Reminder to %s: rent of %s is due on %s", email, charge.amount, charge.due_date

@@ -26,8 +26,7 @@ class MaintenanceRequest(Base):
             name="ck_maintenance_priority",
         ),
         CheckConstraint(
-            "category IN ('plumbing', 'electrical', 'heating', 'appliance', "
-            "'structural', 'other')",
+            "category IN ('plumbing', 'electrical', 'heating', 'appliance', 'structural', 'other')",
             name="ck_maintenance_category",
         ),
         Index("ix_maintenance_unit_status", "unit_id", "status"),
@@ -42,9 +41,7 @@ class MaintenanceRequest(Base):
     priority: Mapped[str] = mapped_column(String(20), server_default="medium")
     status: Mapped[str] = mapped_column(String(20), server_default="submitted")
     assigned_to: Mapped[str | None] = mapped_column(String(255))
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )

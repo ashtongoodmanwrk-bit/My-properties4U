@@ -31,7 +31,5 @@ def list_audit(
         stmt = stmt.where(AuditLog.actor_id == actor_id)
 
     total = db.scalar(select(func.count()).select_from(stmt.subquery()))
-    items = db.scalars(
-        stmt.order_by(AuditLog.id.desc()).limit(limit).offset(offset)
-    ).all()
+    items = db.scalars(stmt.order_by(AuditLog.id.desc()).limit(limit).offset(offset)).all()
     return Page(items=items, total=total, limit=limit, offset=offset)

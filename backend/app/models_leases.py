@@ -23,9 +23,7 @@ class Lease(Base):
         CheckConstraint("end_date > start_date", name="ck_leases_dates"),
         CheckConstraint("rent_amount > 0", name="ck_leases_rent_positive"),
         CheckConstraint("due_day BETWEEN 1 AND 28", name="ck_leases_due_day"),
-        CheckConstraint(
-            "status IN ('active', 'ended', 'cancelled')", name="ck_leases_status"
-        ),
+        CheckConstraint("status IN ('active', 'ended', 'cancelled')", name="ck_leases_status"),
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -36,9 +34,7 @@ class Lease(Base):
     rent_amount: Mapped[Decimal] = mapped_column(Numeric(10, 2))
     due_day: Mapped[int]
     status: Mapped[str] = mapped_column(String(20), server_default="active")
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class RentCharge(Base):
@@ -54,13 +50,9 @@ class RentCharge(Base):
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    lease_id: Mapped[int] = mapped_column(
-        ForeignKey("leases.id", ondelete="CASCADE"), index=True
-    )
+    lease_id: Mapped[int] = mapped_column(ForeignKey("leases.id", ondelete="CASCADE"), index=True)
     due_date: Mapped[date] = mapped_column(Date)
     amount: Mapped[Decimal] = mapped_column(Numeric(10, 2))
     status: Mapped[str] = mapped_column(String(20), server_default="pending")
     reminder_sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     reminder_sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-
-

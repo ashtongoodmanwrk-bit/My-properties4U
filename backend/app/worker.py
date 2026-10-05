@@ -6,9 +6,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from app import jobs
 from app.database import SessionLocal
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger("worker")
 
 

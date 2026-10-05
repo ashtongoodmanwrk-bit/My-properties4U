@@ -10,9 +10,9 @@ def run(job, today):
 
 
 def statuses(client, setup):
-    items = client.get(
-        f"/leases/{setup['lease']['id']}/charges", headers=setup["tenant"]
-    ).json()["items"]
+    items = client.get(f"/leases/{setup['lease']['id']}/charges", headers=setup["tenant"]).json()[
+        "items"
+    ]
     return [c["status"] for c in items]
 
 
