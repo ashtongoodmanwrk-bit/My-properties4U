@@ -1,13 +1,10 @@
 from datetime import datetime
 from decimal import Decimal
-from typing import Generic, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field
 
-T = TypeVar("T")
 
-
-class Page(BaseModel, Generic[T]):
+class Page[T](BaseModel):
     items: list[T]
     total: int
     limit: int
