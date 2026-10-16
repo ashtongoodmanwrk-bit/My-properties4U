@@ -74,4 +74,10 @@ export const api = {
   income: (year: number) => request<IncomeSeries>(`/dashboard/income?year=${year}`),
   leases: () => request<Page<Lease>>('/leases'),
   charges: (leaseId: number) => request<Page<RentCharge>>(`/leases/${leaseId}/charges`),
+  pay: (chargeId: number, amount: string, key: string) =>
+    request<{ id: number }>('/payments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Idempotency-Key': key },
+      body: JSON.stringify({ rent_charge_id: chargeId, amount, method: 'card' }),
+    }),
 }

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../api'
 import { formatDate, money } from '../format'
+import PayButton from '../PayButton'
 
 export default function TenantHome() {
   const leases = useQuery({ queryKey: ['leases'], queryFn: () => api.leases() })
@@ -34,6 +35,7 @@ export default function TenantHome() {
       </div>
 
       <h2>Rent schedule</h2>
+      <p className="muted">Payments are simulated. No real money or card details are used.</p>
       {charges.isPending && <p role="status">Loading rent schedule...</p>}
       {charges.isError && (
         <p role="alert" className="error">
@@ -49,6 +51,7 @@ export default function TenantHome() {
                 <th scope="col">Due date</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Status</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -58,6 +61,13 @@ export default function TenantHome() {
                   <td>{money(c.amount)}</td>
                   <td>
                     <span className={`badge status-${c.status}`}>{c.status}</span>
+                  </td>
+                  <td>
+                    {c.status === 'paid' ? (
+                      <span className="muted">Paid</span>
+                    ) : (
+                      <PayButton charge={c} />
+                    )}
                   </td>
                 </tr>
               ))}
