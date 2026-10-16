@@ -86,3 +86,21 @@ export interface AuditEntry {
   new_values: Record<string, unknown> | null
   created_at: string
 }
+
+export interface Property {
+  id: number
+  owner_id: number
+  name: string
+  address_line: string
+  city: string
+  postcode: string
+  created_at: string
+}
+
+export interface Unit {
+  id: number
+  property_id: number
+  unit_number: string
+  bedrooms: number
+  monthly_rent: string
+}

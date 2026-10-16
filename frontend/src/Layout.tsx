@@ -35,6 +35,7 @@ export default function Layout() {
             <NavLink to="/landlord" end>
               Dashboard
             </NavLink>
+            <NavLink to="/landlord/properties">Properties</NavLink>
             <NavLink to="/landlord/maintenance">Maintenance</NavLink>
           </nav>
         )}

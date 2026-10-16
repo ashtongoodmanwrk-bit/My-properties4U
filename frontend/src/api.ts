@@ -1,4 +1,4 @@
-import type { AuditEntry,
+import type { Property, Unit, AuditEntry,
   Dashboard,
   IncomeSeries,
   Lease,
@@ -78,6 +78,36 @@ export const api = {
     })
   },
   me: () => request<User>('/auth/me'),
+  properties: () => request<Page<Property>>('/properties'),
+  createProperty: (data: { name: string; address_line: string; city: string; postcode: string }) =>
+    request<Property>('/properties', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }),
+  units: (propertyId: number) => request<Page<Unit>>(`/properties/${propertyId}/units`),
+  createUnit: (
+    propertyId: number,
+    data: { unit_number: string; bedrooms: number; monthly_rent: string },
+  ) =>
+    request<Unit>(`/properties/${propertyId}/units`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }),
+  createLease: (data: {
+    unit_id: number
+    tenant_email: string
+    start_date: string
+    end_date: string
+    rent_amount?: string
+    due_day: number
+  }) =>
+    request<Lease>('/leases', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }),
   audit: (params: { entity: string; actorId: string; limit: number; offset: number }) => {
     const q = new URLSearchParams({
       limit: String(params.limit),

@@ -5,6 +5,7 @@ import Layout from './Layout'
 import AdminAudit from './pages/AdminAudit'
 import LandlordDashboard from './pages/LandlordDashboard'
 import LandlordMaintenance from './pages/LandlordMaintenance'
+import LandlordProperties from './pages/LandlordProperties'
 import Login from './pages/Login'
 import TenantHome from './pages/TenantHome'
 import TenantMaintenance from './pages/TenantMaintenance'
@@ -37,6 +38,14 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route
+          path="/landlord/properties"
+          element={
+            <RequireRole role="landlord">
+              <LandlordProperties />
+            </RequireRole>
+          }
+        />
         <Route
           path="/landlord"
           element={
