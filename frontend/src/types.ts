@@ -75,3 +75,14 @@ export interface MaintenanceRequest {
   updated_at: string
   resolved_at: string | null
 }
+
+export interface AuditEntry {
+  id: number
+  actor_id: number | null
+  entity: string
+  entity_id: number
+  action: string
+  old_values: Record<string, unknown> | null
+  new_values: Record<string, unknown> | null
+  created_at: string
+}

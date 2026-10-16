@@ -1,4 +1,4 @@
-import type {
+import type { AuditEntry,
   Dashboard,
   IncomeSeries,
   Lease,
@@ -78,6 +78,15 @@ export const api = {
     })
   },
   me: () => request<User>('/auth/me'),
+  audit: (params: { entity: string; actorId: string; limit: number; offset: number }) => {
+    const q = new URLSearchParams({
+      limit: String(params.limit),
+      offset: String(params.offset),
+    })
+    if (params.entity.trim()) q.set('entity', params.entity.trim())
+    if (params.actorId.trim()) q.set('actor_id', params.actorId.trim())
+    return request<Page<AuditEntry>>(`/audit?${q.toString()}`)
+  },
   maintenance: () => request<Page<MaintenanceRequest>>('/maintenance'),
   reportIssue: (data: { title: string; description: string; category: string; priority: string }) =>
     request<MaintenanceRequest>('/maintenance', {

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from './auth-context'
 import Layout from './Layout'
+import AdminAudit from './pages/AdminAudit'
 import LandlordDashboard from './pages/LandlordDashboard'
 import LandlordMaintenance from './pages/LandlordMaintenance'
 import Login from './pages/Login'
@@ -28,15 +29,6 @@ function Home() {
   if (loading) return <p role="status">Loading...</p>
   if (!user) return <Navigate to="/login" replace />
   return <Navigate to={HOME[user.role]} replace />
-}
-
-function AdminPlaceholder() {
-  return (
-    <>
-      <h1>Admin</h1>
-      <p>The audit log viewer has not been built yet.</p>
-    </>
-  )
 }
 
 export default function App() {
@@ -81,7 +73,7 @@ export default function App() {
           path="/admin"
           element={
             <RequireRole role="admin">
-              <AdminPlaceholder />
+              <AdminAudit />
             </RequireRole>
           }
         />
