@@ -60,3 +60,18 @@ export interface RentCharge {
   amount: string
   status: string
 }
+
+export interface MaintenanceRequest {
+  id: number
+  unit_id: number
+  reported_by: number
+  title: string
+  description: string
+  category: string
+  priority: string
+  status: string
+  assigned_to: string | null
+  created_at: string
+  updated_at: string
+  resolved_at: string | null
+}

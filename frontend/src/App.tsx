@@ -3,8 +3,10 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from './auth-context'
 import Layout from './Layout'
 import LandlordDashboard from './pages/LandlordDashboard'
+import LandlordMaintenance from './pages/LandlordMaintenance'
 import Login from './pages/Login'
 import TenantHome from './pages/TenantHome'
+import TenantMaintenance from './pages/TenantMaintenance'
 import type { Role } from './types'
 
 const HOME: Record<Role, string> = {
@@ -52,10 +54,26 @@ export default function App() {
           }
         />
         <Route
+          path="/landlord/maintenance"
+          element={
+            <RequireRole role="landlord">
+              <LandlordMaintenance />
+            </RequireRole>
+          }
+        />
+        <Route
           path="/tenant"
           element={
             <RequireRole role="tenant">
               <TenantHome />
+            </RequireRole>
+          }
+        />
+        <Route
+          path="/tenant/maintenance"
+          element={
+            <RequireRole role="tenant">
+              <TenantMaintenance />
             </RequireRole>
           }
         />

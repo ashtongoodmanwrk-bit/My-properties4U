@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from './auth-context'
 
@@ -22,6 +22,22 @@ export default function Layout() {
         <Link to="/" className="brand">
           My Properties 4U
         </Link>
+        {user?.role === 'tenant' && (
+          <nav className="main-nav" aria-label="Main">
+            <NavLink to="/tenant" end>
+              Rent
+            </NavLink>
+            <NavLink to="/tenant/maintenance">Maintenance</NavLink>
+          </nav>
+        )}
+        {user?.role === 'landlord' && (
+          <nav className="main-nav" aria-label="Main">
+            <NavLink to="/landlord" end>
+              Dashboard
+            </NavLink>
+            <NavLink to="/landlord/maintenance">Maintenance</NavLink>
+          </nav>
+        )}
         {user && (
           <div className="user-box">
             <span>

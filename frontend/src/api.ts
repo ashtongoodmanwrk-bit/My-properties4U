@@ -1,4 +1,12 @@
-import type { Dashboard, IncomeSeries, Lease, Page, RentCharge, User } from './types'
+import type {
+  Dashboard,
+  IncomeSeries,
+  Lease,
+  MaintenanceRequest,
+  Page,
+  RentCharge,
+  User,
+} from './types'
 
 const TOKEN_KEY = 'pm_token'
 
@@ -70,6 +78,19 @@ export const api = {
     })
   },
   me: () => request<User>('/auth/me'),
+  maintenance: () => request<Page<MaintenanceRequest>>('/maintenance'),
+  reportIssue: (data: { title: string; description: string; category: string; priority: string }) =>
+    request<MaintenanceRequest>('/maintenance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }),
+  updateRequest: (id: number, data: { status: string; assigned_to?: string }) =>
+    request<MaintenanceRequest>(`/maintenance/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }),
   dashboard: () => request<Dashboard>('/dashboard/summary'),
   income: (year: number) => request<IncomeSeries>(`/dashboard/income?year=${year}`),
   leases: () => request<Page<Lease>>('/leases'),

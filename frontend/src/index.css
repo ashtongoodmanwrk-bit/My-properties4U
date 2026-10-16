@@ -74,3 +74,11 @@ th, td { text-align: left; padding: 0.65rem 0.9rem; border-bottom: 1px solid var
 .login-card .btn { margin-top: 0.5rem; }
 .demo { margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 0.75rem; }
 .demo-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.main-nav { display: flex; gap: 1rem; }
+.main-nav a { text-decoration: none; }
+.main-nav a.active { font-weight: 700; text-decoration: underline; }
+.board { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; align-items: start; }
+.plain-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+.form-grid label { display: block; margin-bottom: 0.75rem; }
+.form-grid input, .form-grid select, .form-grid textarea { display: block; width: 100%; max-width: 32rem; margin-top: 0.25rem; }
