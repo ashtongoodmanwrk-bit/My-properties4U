@@ -42,7 +42,7 @@ flowchart LR
 - **Backend:** FastAPI, SQLAlchemy 2.0, Alembic, psycopg 3, Pydantic, argon2 password hashing, JWT auth, APScheduler.
 - **Database:** PostgreSQL 16.
 - **Frontend:** React, TypeScript, Vite, TanStack Query, React Router, Recharts.
-- **DevOps:** Docker and Docker Compose, GitHub Actions CI (ruff, pytest, ESLint, build), deployed on Render and Neon.
+- **DevOps:** Docker and Docker Compose, GitHub Actions CI (ruff, pytest, ESLint, build), deployed on Render and Neon, with JSON request logs and Sentry error tracking.
 - **Tests:** 51 pytest tests, including real concurrency tests.
 
 ## Design decisions
@@ -54,6 +54,11 @@ flowchart LR
 - **Maintenance follows a strict workflow:** submitted, assigned, in progress, resolved. Skipping a step returns 409, and the row is locked while it changes.
 - **Dashboard figures are computed in SQL** from a database view of charge balances.
 - **APScheduler instead of Celery:** the jobs are small and idempotent, and a Redis broker would add infrastructure for no benefit. In production the job runs from a scheduled GitHub Actions workflow because the free hosting tier has no always-on worker.
+
+## Monitoring
+
+- **Structured logs:** every request is logged as one JSON line with the method, path, status, duration and a request id, which is also returned in the `X-Request-ID` response header. Passwords, tokens and request bodies are never logged. The health check is left out so it doesn't flood the log.
+- **Error tracking:** unhandled errors are sent to Sentry when the `SENTRY_DSN` setting exists. It is off by default, so local runs and tests send nothing.
 
 ## Run it locally
 
