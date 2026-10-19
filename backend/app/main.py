@@ -3,6 +3,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.observability import setup_observability
 from app.routers import (
     audit,
     auth,
@@ -14,6 +15,7 @@ from app.routers import (
 )
 
 app = FastAPI(title="Property Management API")
+setup_observability(app)
 app.include_router(auth.router)
 app.include_router(properties.router)
 app.include_router(leases.router)
