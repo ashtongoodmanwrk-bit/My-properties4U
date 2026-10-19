@@ -101,3 +101,4 @@ docs/       Extra documentation
 ## Further reading
 
 - [Concurrency and payment safety](docs/concurrency.md): how double payments are prevented, with test evidence.
+- [Database design](docs/er-diagram.md): entity-relationship diagram and the rules the database enforces.
