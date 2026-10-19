@@ -97,3 +97,7 @@ frontend/   React app
 docs/       Extra documentation
 .github/    CI and scheduled job workflows
 ```
+
+## Further reading
+
+- [Concurrency and payment safety](docs/concurrency.md): how double payments are prevented, with test evidence.
