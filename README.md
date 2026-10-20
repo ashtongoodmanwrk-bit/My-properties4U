@@ -27,6 +27,24 @@ All accounts use the password `Demo1234!`.
 - **Admins:** a filterable, paginated audit log showing old and new values for every change.
 - **Background jobs:** overdue rent marking and upcoming-rent reminders, run daily.
 
+## Screenshots
+
+Landlord dashboard: occupancy, income collected against expected, overdue rent and open requests.
+
+![Landlord dashboard](docs/screenshots/landlord-dashboard.png)
+
+Maintenance board: requests move through submitted, assigned, in progress and resolved.
+
+![Maintenance board](docs/screenshots/maintenance-board.png)
+
+Tenant rent schedule with a Pay rent button (payments are simulated).
+
+![Tenant rent schedule](docs/screenshots/tenant-rent.png)
+
+Admin audit log, with the old and new values for each change.
+
+![Audit log](docs/screenshots/audit-log.png)
+
 ## Architecture
 
 ```mermaid
