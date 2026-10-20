@@ -141,3 +141,19 @@ export const api = {
       body: JSON.stringify({ rent_charge_id: chargeId, amount, method: 'card' }),
     }),
 }
+
+export async function downloadStatement(month: string): Promise<void> {
+  const token = getToken()
+  const res = await fetch(`/api/statements?month=${encodeURIComponent(month)}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  })
+  if (!res.ok) throw new ApiError(res.status, await errorMessage(res))
+  const url = URL.createObjectURL(await res.blob())
+  const link = document.createElement('a')
+  link.href = url
+  link.download = `statement-${month}.csv`
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  URL.revokeObjectURL(url)
+}

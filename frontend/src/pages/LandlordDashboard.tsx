@@ -12,6 +12,7 @@ import {
 import { api } from '../api'
 import { money, moneyWhole } from '../format'
 import { BuildingIcon, ClockIcon, WalletIcon, WrenchIcon } from '../icons'
+import StatementDownload from '../StatementDownload'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
@@ -47,6 +48,7 @@ export default function LandlordDashboard() {
     <>
       <h1>Dashboard</h1>
       <p className="page-category">Occupancy, rent and maintenance across your properties.</p>
+      <StatementDownload />
 
       <section aria-labelledby="kpi-heading">
         <h2 id="kpi-heading">This month ({d.month})</h2>

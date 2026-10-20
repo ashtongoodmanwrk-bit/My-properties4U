@@ -12,6 +12,7 @@ from app.routers import (
     maintenance,
     payments,
     properties,
+    statements,
 )
 
 app = FastAPI(title="Property Management API")
@@ -23,6 +24,7 @@ app.include_router(payments.router)
 app.include_router(maintenance.router)
 app.include_router(audit.router)
 app.include_router(dashboard.router)
+app.include_router(statements.router)
 
 
 @app.get("/health")
