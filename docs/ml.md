@@ -1,10 +1,10 @@
 # Late-payment risk (prototype)
 
-The landlord dashboard lists upcoming rent charges with an estimated chance of being paid late. This is a small machine-learning prototype. **It is trained on synthetic data, not on real tenants,** and it is indicative only.
+The landlord dashboard lists upcoming rent charges with an estimated chance of being paid late. This is a small machine-learning prototype. **It is trained on synthetic data, not on real tenants,** and it can only be indicative.
 
 ## What it predicts
 
-Whether a rent charge will be completed more than 3 days after its due date. Charges with fewer than 3 earlier charges on the same lease are not scored, because there is too little history.
+Whether or not a rent charge will be completed more than 3 days after its due date. Charges with fewer than 3 earlier charges on the same lease are not scored, because there is too little history.
 
 The features use only earlier charges on the same lease: the share paid late, the share late among the last three, whether the last one was late, the average days late over the last three, the share paid in parts, the rent, and whether the due month is December. No personal characteristics are used.
 
