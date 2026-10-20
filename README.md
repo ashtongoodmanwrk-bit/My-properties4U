@@ -55,6 +55,10 @@ flowchart LR
 - **Dashboard figures are computed in SQL** from a database view of charge balances.
 - **APScheduler instead of Celery:** the jobs are small and idempotent, and a Redis broker would add infrastructure for no benefit. In production the job runs from a scheduled GitHub Actions workflow because the free hosting tier has no always-on worker.
 
+## Late-payment risk (prototype)
+
+The landlord dashboard lists upcoming rent charges with an estimated chance of late payment, based on each tenant's earlier payments. It is a small logistic-regression prototype **trained on synthetic data**, evaluated on later months than it trained on and compared with a simple baseline. The model is saved as plain numbers, so the deployed API needs no machine-learning libraries. Method, results and limits are in [docs/ml.md](docs/ml.md).
+
 ## Monitoring
 
 - **Structured logs:** every request is logged as one JSON line with the method, path, status, duration and a request id, which is also returned in the `X-Request-ID` response header. Passwords, tokens and request bodies are never logged. The health check is left out so it doesn't flood the log.
@@ -107,3 +111,4 @@ docs/       Extra documentation
 
 - [Concurrency and payment safety](docs/concurrency.md): how double payments are prevented, with test evidence.
 - [Database design](docs/er-diagram.md): entity-relationship diagram and the rules the database enforces.
+- [Late-payment risk](docs/ml.md): how the prototype model was trained, evaluated and limited.

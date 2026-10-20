@@ -1,3 +1,4 @@
+import type { RiskResponse } from './types'
 import type { Property, Unit, AuditEntry,
   Dashboard,
   IncomeSeries,
@@ -78,6 +79,7 @@ export const api = {
     })
   },
   me: () => request<User>('/auth/me'),
+  risk: () => request<RiskResponse>('/risk'),
   properties: () => request<Page<Property>>('/properties'),
   createProperty: (data: { name: string; address_line: string; city: string; postcode: string }) =>
     request<Property>('/properties', {

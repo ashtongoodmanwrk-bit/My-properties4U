@@ -12,6 +12,7 @@ import {
 import { api } from '../api'
 import { money, moneyWhole } from '../format'
 import { BuildingIcon, ClockIcon, WalletIcon, WrenchIcon } from '../icons'
+import RiskTable from '../RiskTable'
 import StatementDownload from '../StatementDownload'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -131,6 +132,7 @@ export default function LandlordDashboard() {
           </div>
         )}
       </section>
+      <RiskTable />
     </>
   )
 }

@@ -1,0 +1,71 @@
+{
+  "trained_on": "synthetic data (see docs/ml.md)",
+  "features": [
+    "n_prev",
+    "late_rate",
+    "late_rate_last3",
+    "last_late",
+    "mean_days_late_last3",
+    "partial_rate",
+    "rent_k",
+    "is_december"
+  ],
+  "mean": [
+    8.538461538461538,
+    0.27493334443334433,
+    0.28477564102564246,
+    0.28509615384615383,
+    2.71160256410255,
+    0.07970728070006958,
+    1.1949932230985139,
+    0.07692307692307693
+  ],
+  "scale": [
+    3.1529079279875742,
+    0.23930621623943235,
+    0.30881468470929646,
+    0.45146022738254615,
+    2.4026761246562853,
+    0.10917403815872075,
+    0.3404214834005053,
+    0.2664693550105792
+  ],
+  "coef": [
+    0.004491209992575984,
+    0.5464352439374677,
+    -0.0034030565934927135,
+    0.08382995473269272,
+    0.12874857966638023,
+    -0.004505702457720624,
+    0.14442310265963043,
+    0.1418341995996236
+  ],
+  "intercept": -1.014046497977547,
+  "metrics": {
+    "train_charges": 10400,
+    "test_charges": 6400,
+    "late_rate_in_test": 0.292,
+    "roc_auc": 0.72,
+    "precision_at_0.5": 0.644,
+    "recall_at_0.5": 0.232,
+    "baseline_never_late_accuracy": 0.708,
+    "baseline_last_late_roc_auc": 0.611,
+    "baseline_last_late_precision": 0.454,
+    "baseline_last_late_recall": 0.441,
+    "risk_bands": {
+      "low": {
+        "charges": 2020,
+        "actual_late_rate": 0.134
+      },
+      "medium": {
+        "charges": 3708,
+        "actual_late_rate": 0.314
+      },
+      "high": {
+        "charges": 672,
+        "actual_late_rate": 0.644
+      }
+    },
+    "bands_defined_as": "low < 0.2, medium < 0.5, high >= 0.5"
+  }
+}

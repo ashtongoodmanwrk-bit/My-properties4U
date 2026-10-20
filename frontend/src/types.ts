@@ -104,3 +104,21 @@ export interface Unit {
   bedrooms: number
   monthly_rent: string
 }
+
+export interface RiskItem {
+  charge_id: number
+  lease_id: number
+  property_name: string
+  unit_number: string
+  tenant_email: string
+  due_date: string
+  amount: string
+  probability: number | null
+  band: string
+}
+
+export interface RiskResponse {
+  items: RiskItem[]
+  total: number
+  note: string
+}

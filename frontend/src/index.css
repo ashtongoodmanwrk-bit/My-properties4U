@@ -131,3 +131,8 @@ tbody tr:hover { background: #f6f9fc; }
 
 .statement { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin: 1rem 0; }
 .statement label { font-weight: 600; color: var(--heading); }
+
+.risk-low { background: #e3f6e5; color: #1b7a2b; }
+.risk-medium { background: #fff2dc; color: #9a5b00; }
+.risk-high { background: #fde7e8; color: #b4232c; }
+.risk-unknown { background: #eef0f4; color: #4a5160; }
